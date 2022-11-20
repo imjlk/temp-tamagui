@@ -1,0 +1,19 @@
+{
+  "name": "@my/ui",
+  "version": "0.0.1",
+  "sideEffects": [
+    "*.css"
+  ],
+  "private": true,
+  "types": "src",
+  "main": "src/index.tsx",
+  "module:jsx": "src",
+  "files": [
+    "types",
+    "dist"
+  ],
+  "dependencies": {
+    "@my/config": "*",
+    "tamagui": "^1.0.1-beta.219"
+  }
+}
