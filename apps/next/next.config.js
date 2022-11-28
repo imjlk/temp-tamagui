@@ -3,6 +3,7 @@ const { withTamagui } = require('@tamagui/next-plugin')
 const withImages = require('next-images')
 const withTM = require('next-transpile-modules')
 const { join } = require('path')
+const { withFaust, getWpHostname } = require('@faustwp/core');
 
 process.env.IGNORE_TS_CONFIG_PATHS = 'true'
 process.env.TAMAGUI_TARGET = 'web'
@@ -65,18 +66,25 @@ const plugins = [
   }),
 ]
 
-module.exports = function () {
+const nextConfig = function () {
   let config = {
     typescript: {
       ignoreBuildErrors: true,
     },
     images: {
       disableStaticImages: true,
+      domains: [getWpHostname()],
     },
     experimental: {
       scrollRestoration: true,
       legacyBrowsers: false,
     },
+    rewrites: [
+      {
+        source: "/:path*/*",
+        destination: "https://:path*.meetin.homes/*"
+      }
+    ]
   }
 
   for (const plugin of plugins) {
@@ -88,3 +96,5 @@ module.exports = function () {
 
   return config
 }
+
+module.exports = withFaust(nextConfig())
